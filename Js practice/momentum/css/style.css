@@ -2,7 +2,7 @@ body {
     font-family: sans-serif;
     background-color: #000;
     opacity: 1;
-
+    margin: 0;
 }
 
 .hidden {

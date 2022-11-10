@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<body>
+    <div id="root"></div>
+
+</body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script><!--babel(변환기) -->
+    <script type="text/babel">
+        const root = document.getElementById("root");
+        function App() {
+            const [amount, setAmount] = React.useState(0);
+            const onChange = (event) =>{
+                setAmount(event.target.value);
+            }
+            const [inverted, setinverted] = React.useState(false);
+            const reset = () => setAmount(0);
+            
+            const onInvert = () => {
+            reset();
+            setinverted((current) => !current);}
+        return (
+            <div>
+            <h1 className = "hi">Super Converter</h1>
+            
+            <div><label htmlFor ="amount">amount</label>
+            <input 
+            value = {inverted ? amount*60 : amount}
+            id="amount" 
+            placeholder = "amount" 
+            type = "number"
+            disabled = {inverted === true}
+            onChange = {onChange} />
+            </div>
+            
+            <div>
+            <label htmlFor = "hours">Hours</label>
+            <input value = {inverted ? amount : Math.round(amount/60)} 
+            id="hours" 
+            placeholder = "Second" 
+            type = "number"
+            disabled = {inverted === false} 
+            onChange = {onChange}/>
+            </div>
+
+            <button onClick= {reset}>reset</button>
+            <button onClick= {onInvert}>{inverted ? "Turn Back" : "invert"}</button>
+            </div>
+        );
+    }
+        ReactDOM.render(<App />,root);
+    </script>
+
+
+</html>

@@ -1,7 +1,7 @@
-import { useEffect, React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Todolist from "./Todolist";
-import styled from "styled-components";
-import type { RangePickerProps } from "antd/es/date-picker";
+import "./app.css";
+
 import {
   Button,
   Select,
@@ -11,7 +11,6 @@ import {
   Typography,
   Col,
   Row,
-  Divider,
 } from "antd";
 import moment from "moment";
 
@@ -20,18 +19,15 @@ const Home = () => {
   const format = "HH:mm";
   const { Title } = Typography;
   const [inputdate, setInputdate] = useState("");
-  const [summary, setSummary] = useState("");
+  const [topic, setTopic] = useState("");
   const [context, setContext] = useState("");
   const [timekeeper, setTimekeeper] = useState("");
   const [preAlarm, setPreAlarm] = useState("");
   const [storeTodo, setStoreTodo] = useState([]);
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  console.log(storeTodo);
   const onDateChange = (time, timeString) => {
     setInputdate(timeString);
-    console.log(time, timeString);
   };
   const range = (start, end) => {
     const result = [];
@@ -40,40 +36,38 @@ const Home = () => {
     }
     return result;
   };
-  const onSummaryChange = (e) => {
-    console.log(e.target.value);
-    setSummary(e.target.value);
+  const onTopicChange = (e) => {
+    setTopic(e.target.value);
   };
   const onContextChange = (e) => {
-    console.log(e.target.value);
     setContext(e.target.value);
   };
   const onTimeKeeperChange = (time, timeString) => {
     setTimekeeper(timeString);
-    console.log(time, timeString);
   };
   const onPreAlarmChange = (value) => {
     setPreAlarm(value);
-    console.log(value);
   };
   const onStoreTodo = () => {
     let values = {};
     let count = storeTodo.length;
-    console.log(count);
     values = {
       id: count + 1,
       inputdate,
-      summary,
+      topic,
       context,
       timekeeper,
       preAlarm,
     };
-    console.log("values", values);
     let preStore = [...storeTodo, values];
     setStoreTodo(preStore);
+
     localStorage.setItem("values", JSON.stringify(preStore));
   };
-
+  useEffect(() => {
+    const savedTodo = localStorage.getItem("values");
+    setStoreTodo(JSON.parse(savedTodo));
+  }, []);
   return (
     <div>
       <Title>Todd Alarms</Title>
@@ -90,7 +84,7 @@ const Home = () => {
           <Title level={3}>주제</Title>
         </Col>
         <Col flex={3}>
-          <Input onChange={onSummaryChange} placeholder="Basic usage" />
+          <Input onChange={onTopicChange} placeholder="Basic usage" />
         </Col>
       </Row>
       <Row>

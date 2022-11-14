@@ -1,54 +1,35 @@
 import { React } from "react";
-import { Typography, Col, Row, Button, Divider } from "antd";
+import { Col, Row, Button } from "antd";
 
 import TodoItem from "./Todoitem";
 
 const Todolist = ({ data }) => {
-  const { Title } = Typography;
-  console.log("data", data);
-  return (
-    <div>
-      <Row>
-        <Col span={8}></Col>
-        <Col span={8}>
-          <Title level={2}> My Daily Todolist</Title>
-        </Col>
-        <Col span={8}></Col>
-      </Row>
+  const dataComp = data.map((a) => (
+    <Row key={a.id}>
+      <TodoItem
+        key={a.id}
+        inputdate={a.inputdate}
+        topic={a.topic}
+        context={a.context}
+        timekeeper={a.timekeeper}
+        preAlarm={a.preAlarm}
+      ></TodoItem>
+    </Row>
+  ));
+  console.log("dataComp", dataComp);
 
-      <Row>
-        <Col flex={2}>
-          <Title level={5}>
-            <TodoItem data={data} />
-          </Title>
-        </Col>
-        <Col flex={3}>
-          <Button>Default Button</Button>
-        </Col>
-      </Row>
-      <Divider />
-      <Row>
-        <Col flex={2}>
-          <Title level={5}>
-            <TodoItem data={data} />
-          </Title>
-        </Col>
-        <Col flex={3}>
-          <Button>Default Button</Button>
-        </Col>
-      </Row>
-      <Divider dashed />
-      <Row>
-        <Col flex={2}>
-          <Title level={5}>
-            <TodoItem data={data} />
-          </Title>
-        </Col>
-        <Col flex={3}>
-          <Button>Default Button</Button>
-        </Col>
-      </Row>
-    </div>
+  return (
+    <Row>
+      <Col span={6}>
+        <Row>{dataComp}</Row>
+      </Col>
+      <Col span={6}>col-6</Col>
+      <Col span={6}>
+        <Button danger>Delete</Button>
+        <Button type="primary"> Edit </Button>
+      </Col>
+      <Col span={6}>col-6</Col>
+    </Row>
   );
 };
 
